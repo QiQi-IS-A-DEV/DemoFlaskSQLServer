@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Thực đơn hôm nay</h2>
+    <a href="{{ url_for('add_food') }}" class="btn btn-success">+ Thêm món mới</a>
+</div>
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm position-relative">
+            <a href="{{ url_for('delete_food', id=item.id) }}" 
+               class="btn btn-sm btn-outline-secondary position-absolute top-0 end-0 m-2"
+               onclick="return confirm('Bạn có chắc muốn xóa món này không?')">X</a>
+            
+            <img src="{{ item.image_url }}" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text text-muted small">{{ item.description }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-danger fw-bold">{{ "{:,.0f}".format(item.price) }}đ</span>
+                    <button class="btn btn-outline-danger btn-sm">Đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
